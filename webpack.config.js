@@ -20,6 +20,11 @@ module.exports = {
             '@': path.resolve(__dirname, 'src')
         }
     },
+    optimization: { 
+        splitChunks: { // Разбить chunk(подключения)  
+            chunks: 'all'
+        }
+    },
     plugins: [ // Плагины
         new HtmlWebpackPlugin({ //Html плагин для подключения своего шаблона
             template: './index.html'
