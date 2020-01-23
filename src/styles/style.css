@@ -1,7 +1,6 @@
 @import '~normalize.css';
 @import 'roboto.css';
-
-body{
+body {
     font-family: "Roboto", sans-serif;
 }
 
@@ -10,7 +9,7 @@ body{
     max-width: 1000px;
     margin: 0 auto;
     padding-bottom: 2rem;
-  }
+}
 
 h1 {
     text-align: center;
@@ -22,4 +21,8 @@ h1 {
     height: 200px;
     width: 200px;
     margin: 0 auto;
+}
+
+.code {
+    color: crimson;
 }

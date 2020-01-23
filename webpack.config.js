@@ -20,10 +20,13 @@ module.exports = {
             '@': path.resolve(__dirname, 'src')
         }
     },
-    optimization: { 
+    optimization: {
         splitChunks: { // Разбить chunk(подключения)  
             chunks: 'all'
         }
+    },
+    devServer: { // Запуск сервера который обновляется при изменение файлов
+        port: 4200
     },
     plugins: [ // Плагины
         new HtmlWebpackPlugin({ //Html плагин для подключения своего шаблона
