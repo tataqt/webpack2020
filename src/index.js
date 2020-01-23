@@ -1,4 +1,4 @@
-import Post from './Post';
+import Post from '@models/Post';
 import json from './assets/json';
 import xml from './assets/data.xml';
 import csv from './assets/data.csv';
