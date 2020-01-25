@@ -25,6 +25,25 @@ const optimization = () => {
     return config
 }
 
+const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
+
+const cssLoaders = extra => {
+    const loaders = [{
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+            hmr: isDev,
+            reloadAll: true
+        },
+    },
+        'css-loader'
+    ]
+
+    if (extra) {
+        loaders.push(extra)
+    }
+
+    return loaders
+}
 
 module.exports = {
     context: path.resolve(__dirname, 'src'), // Точка входа
@@ -34,7 +53,7 @@ module.exports = {
         analytics: './analytics.js'
     },
     output: {
-        filename: '[name]-[contenthash].js',
+        filename: filename('js'),
         path: path.resolve(__dirname, 'dist')
     }, // Выходящие js файлы
     resolve: {
@@ -64,21 +83,22 @@ module.exports = {
             }
         ]),
         new MiniCssExtractPlugin({ //Подключаем css в отдельный файл
-            filename: '[name]-[contenthash].css'
+            filename: filename('css')
         })
     ],
     module: {
         rules: [ // Правила для подключение различных типов файлов
             {
                 test: /\.css$/, // Подключаем css
-                use: [{
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        hmr: isDev,
-                        reloadAll: true
-                    },
-                }, 'css-loader'
-                ]
+                use: cssLoaders()
+            },
+            {
+                test: /\.less$/, // Подключаем less
+                use: cssLoaders('less-loader')
+            },
+            {
+                test: /\.s[ac]ss$/, // Подключаем sass
+                use: cssLoaders('sass-loader')
             },
             {
                 test: /\.(png|jpg|svg|gif)$/, // Подключаем картинки

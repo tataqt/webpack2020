@@ -378,3 +378,23 @@ h1 {
 .code {
     color: crimson;
 }
+.box {
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+}
+.box h2 {
+  text-align: center;
+  color: darkblue;
+}
+
+.cart {
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  border: 1px solid #ccc; }
+  .cart h2 {
+    text-align: center;
+    color: darkred; }
+
