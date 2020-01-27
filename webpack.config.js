@@ -49,7 +49,10 @@ module.exports = {
     context: path.resolve(__dirname, 'src'), // Точка входа
     mode: 'development', // Тип проекта dev or production
     entry: { // Входящие js файлы
-        main: './index.js',
+        main: [
+            '@babel/polyfill',
+            './index.js'
+        ],
         analytics: './analytics.js'
     },
     output: {
@@ -115,6 +118,21 @@ module.exports = {
             {
                 test: /\.csv$/, // Подключаем csv
                 use: ['csv-loader']
+            },
+            {
+                test: /\.js$/, // Подключаем babel
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            '@babel/preset-env'
+                        ],
+                        plugins: [
+                            '@babel/plugin-proposal-class-properties'
+                        ]
+                    }
+                }
             }
         ]
     }
