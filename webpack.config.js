@@ -88,6 +88,7 @@ module.exports = {
         port: 4200,
         hot: isDev
     },
+    devtool: isDev ? 'source-map' : '',
     plugins: [ // Плагины
         new HtmlWebpackPlugin({ //Html плагин для подключения своего шаблона
             template: './index.html',
