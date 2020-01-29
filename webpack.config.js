@@ -62,6 +62,18 @@ const babelOptions = (preset) => {
     return opts;
 }
 
+const jsLoaders = () => {
+    const loaders = [{
+        loader: 'babel-loader',// Подключаем babel
+        options: babelOptions()
+    }];
+
+    if (isDev) {
+        loaders.push('eslint-loader')
+    }
+    return loaders
+}
+
 module.exports = {
     context: path.resolve(__dirname, 'src'), // Точка входа
     mode: 'development', // Тип проекта dev or production
@@ -138,12 +150,9 @@ module.exports = {
                 use: ['csv-loader']
             },
             {
-                test: /\.js$/, // Подключаем babel
+                test: /\.js$/,
                 exclude: /node_modules/,
-                loader: {
-                    loader: 'babel-loader',
-                    options: babelOptions()
-                }
+                use: jsLoaders()
             },
             {
                 test: /\.ts$/, // Подключаем typescript
