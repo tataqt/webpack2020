@@ -5,6 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -74,6 +76,32 @@ const jsLoaders = () => {
     return loaders
 }
 
+const plugins = () => {
+    const base = [ // Плагины
+        new HtmlWebpackPlugin({ //Html плагин для подключения своего шаблона
+            template: './index.html',
+            minify: {
+                collapseWhitespace: !isDev
+            }
+        }),
+        new CleanWebpackPlugin(), // Очиста папки в которую билдится проект
+        new CopyWebpackPlugin([ // Для переноса любых файлов
+            {
+                from: path.resolve(__dirname, 'src/favicon.ico'),
+                to: path.resolve(__dirname, 'dist')
+            }
+        ]),
+        new MiniCssExtractPlugin({ //Подключаем css в отдельный файл
+            filename: filename('css')
+        })
+    ]
+
+    if (!isDev) {
+        base.push(new BundleAnalyzerPlugin)
+    }
+    return base
+}
+
 module.exports = {
     context: path.resolve(__dirname, 'src'), // Точка входа
     mode: 'development', // Тип проекта dev or production
@@ -101,24 +129,7 @@ module.exports = {
         hot: isDev
     },
     devtool: isDev ? 'source-map' : '',
-    plugins: [ // Плагины
-        new HtmlWebpackPlugin({ //Html плагин для подключения своего шаблона
-            template: './index.html',
-            minify: {
-                collapseWhitespace: !isDev
-            }
-        }),
-        new CleanWebpackPlugin(), // Очиста папки в которую билдится проект
-        new CopyWebpackPlugin([ // Для переноса любых файлов
-            {
-                from: path.resolve(__dirname, 'src/favicon.ico'),
-                to: path.resolve(__dirname, 'dist')
-            }
-        ]),
-        new MiniCssExtractPlugin({ //Подключаем css в отдельный файл
-            filename: filename('css')
-        })
-    ],
+    plugins: plugins(),
     module: {
         rules: [ // Правила для подключение различных типов файлов
             {
