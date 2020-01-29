@@ -64,12 +64,12 @@ const babelOptions = (preset) => {
 
 const jsLoaders = () => {
     const loaders = [{
-        loader: 'babel-loader',// Подключаем babel
+        loader: 'babel-loader', // Подключаем babel
         options: babelOptions()
     }];
 
     if (isDev) {
-        loaders.push('eslint-loader')
+        loaders.push('eslint-loader') // Подключаем eslint
     }
     return loaders
 }
